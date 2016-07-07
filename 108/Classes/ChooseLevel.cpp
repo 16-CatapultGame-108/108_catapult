@@ -17,7 +17,6 @@ Scene* ChooseLevel::createScene()
     return scene;
 }
 
-
 // on "init" you need to initialize your instance
 bool ChooseLevel::init()
 {
@@ -68,26 +67,6 @@ bool ChooseLevel::onTouchBegan(Touch* touch, Event* event)
 {    
 	this->m_touchPoint = touch->getLocation();
 	this->m_offsetPoint = this->scrollview->getContentOffset();
-	//Point touchPoint = convertTouchToNodeSpace(touch);
-	
-	CCPoint touchPoint = touch->getLocation(); // Get the touch position
-	touchPoint = this->convertToWorldSpace(touchPoint);
-	float x = touchPoint.x - myoffset;
-	float y = touchPoint.y;
-	CCLOG("the x ");
-	CCLOG("%f", x);
-	CCLOG("the y ");
-	CCLOG("%f", y);
-
-	Size winSize = Director::getInstance()->getWinSize();
-	if (x >= winSize.width / 2 - 220 && x <= winSize.width / 2 + 220 && y >= winSize.height / 2 - 124 && y <= winSize.height / 2 + 124)
-	{
-		Director::getInstance()->replaceScene(HelloWorld::createScene()); //choose scene1
-	}
-	if (x >= 1.5* winSize.width - 220 && x <= 1.5 * winSize.width + 220 && y >= winSize.height / 2 - 124 && y <= winSize.height / 2 + 124)
-	{
-		Director::getInstance()->replaceScene(HelloWorld::createScene());   //choose scene2
-	}
 	return true;
 }
 
@@ -106,7 +85,25 @@ void ChooseLevel::onTouchEnded(Touch* touch, Event* event) {
 	//手指移动的距离小于20的时候，就将偏移量作为0处理  
 	if (fabs(distance) < 20)
 	{
-		this->adjustScrollView(0);
+		CCPoint touchPoint = touch->getLocation(); // Get the touch position
+		touchPoint = this->convertToWorldSpace(touchPoint);
+		float x = touchPoint.x - myoffset;
+		float y = touchPoint.y;
+		CCLOG("the x ");
+		CCLOG("%f", x);
+		CCLOG("the y ");
+		CCLOG("%f", y);
+
+		Size winSize = Director::getInstance()->getWinSize();
+		if (x >= winSize.width / 2 - 220 && x <= winSize.width / 2 + 220 && y >= winSize.height / 2 - 124 && y <= winSize.height / 2 + 124)
+		{
+			Director::getInstance()->replaceScene(HelloWorld::createScene()); //choose scene1
+		}
+		if (x >= 1.5* winSize.width - 220 && x <= 1.5 * winSize.width + 220 && y >= winSize.height / 2 - 124 && y <= winSize.height / 2 + 124)
+		{
+			Director::getInstance()->replaceScene(HelloWorld::createScene());   //choose scene2
+		}
+		//this->adjustScrollView(0);
 	}
 	else
 	{
