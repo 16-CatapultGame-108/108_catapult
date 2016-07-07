@@ -1,7 +1,5 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
-#include "Myshow.h"
-#include "ChooseLevel.h"
+#include "MainPageScene.h"
 
 USING_NS_CC;
 
@@ -40,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    auto scene = ChooseLevel::createScene();
+    auto scene = MainPage::createScene();
 
     // run
     director->runWithScene(scene);

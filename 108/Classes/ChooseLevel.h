@@ -18,10 +18,15 @@ public:
 	void onTouchMoved(Touch* touch, Event* event);//触摸移动方法
 
 	void onTouchEnded(Touch* touch, Event* event);//触摸结束方法
-
+	void adjustScrollView(float offset);
 private:
 	ScrollView* scrollview;
-	EventDispatcher* dispatcher;
+	
 	float myoffset = 0;
+
+	Point m_touchPoint;
+
+	Point m_offsetPoint;
+	int m_nCurPage;
 };
 

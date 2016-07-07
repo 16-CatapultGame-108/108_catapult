@@ -33,8 +33,6 @@ bool ChooseLevel::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	scrollview = ScrollView::create(Size(winSize.width, winSize.height));
-
-	scrollview->setDirection(ScrollView::Direction::HORIZONTAL);
 	Layer* layer = Layer::create();
 	for (int i = 0; i < 3; i++)
 	{
@@ -49,34 +47,29 @@ bool ChooseLevel::init()
 	scrollview->setContainer(layer);
 	//setContentSize()设置内容区的大小
 	scrollview->setContentSize(Size(winSize.width * 3, winSize.height));
-	addChild(scrollview, 1);
 
+	scrollview->setTouchEnabled(false);
+	//设置里边内容的偏移量  
+	//scrollview->setContentOffset(Point(0, 0));
+	this->addChild(scrollview);
+	
 	auto listener = EventListenerTouchOneByOne::create();
-
 	listener->onTouchBegan = CC_CALLBACK_2(ChooseLevel::onTouchBegan, this);
-
 	listener->onTouchMoved = CC_CALLBACK_2(ChooseLevel::onTouchMoved, this);
-
 	listener->onTouchEnded = CC_CALLBACK_2(ChooseLevel::onTouchEnded, this);
-
+	listener->setSwallowTouches(true);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 
     return true;
 }
 
-/*void ChooseLevel::scrollViewDidScroll(ScrollView* view) {
-	int a = 0;
-}
-
-void ChooseLevel::scrollViewDidZoom(ScrollView* view) {
-	int b = 0;
-}
-*/
-
 bool ChooseLevel::onTouchBegan(Touch* touch, Event* event)
 {    
+	this->m_touchPoint = touch->getLocation();
+	this->m_offsetPoint = this->scrollview->getContentOffset();
 	//Point touchPoint = convertTouchToNodeSpace(touch);
+	
 	CCPoint touchPoint = touch->getLocation(); // Get the touch position
 	touchPoint = this->convertToWorldSpace(touchPoint);
 	float x = touchPoint.x - myoffset;
@@ -98,17 +91,47 @@ bool ChooseLevel::onTouchBegan(Touch* touch, Event* event)
 	return true;
 }
 
-void ChooseLevel::onTouchMoved(Touch* touch, Event* event)
-{
-	int a = 5;
+void ChooseLevel::onTouchMoved(Touch* touch, Event* event) {
+	Point point = touch->getLocation();
+	Point direction = point - this->m_touchPoint;
+	//Point spriteDirection = ccpAdd(this->m_offsetPoint,direction);  
+	//只在x方向偏移 
+	Point spriteDirection = Point(direction.x + this->m_offsetPoint.x, 0);
+	this->scrollview->setContentOffset(spriteDirection);
 }
 
 void ChooseLevel::onTouchEnded(Touch* touch, Event* event) {
-	scrollview->unscheduleAllSelectors();
-	float x = scrollview->getContentOffset().x;
-	float offset = -x / Director::getInstance()->getWinSize().width;
-	int temp = offset;
-	if (offset - temp > 0.5) temp++;
-	myoffset = -temp * Director::getInstance()->getWinSize().width;
-	scrollview->setContentOffsetInDuration(Vec2(-temp * Director::getInstance()->getWinSize().width, 0), 0.3f);
+	Point endPoint = touch->getLocation();
+	float distance = endPoint.x - this->m_touchPoint.x;
+	//手指移动的距离小于20的时候，就将偏移量作为0处理  
+	if (fabs(distance) < 20)
+	{
+		this->adjustScrollView(0);
+	}
+	else
+	{
+		//将偏移量作为参数传进来  
+		this->adjustScrollView(distance);
+	}
+}
+
+void ChooseLevel::adjustScrollView(float offset)
+{
+	Size winSize = Director::getInstance()->getWinSize();
+	// 我们根据 offset 的实际情况来判断移动效果  
+	//如果手指往左划，offset大于0，说明页面在减小，往右增大  
+	if (offset < 0)
+		m_nCurPage++;
+	else if (offset > 0)
+		m_nCurPage--;
+
+	//不允许超出最左边的一页和最右边的一页  
+	if (m_nCurPage < 0)
+		m_nCurPage = 0;
+	else if (m_nCurPage > 2)
+		m_nCurPage = 2;
+
+	Point adjustPoint = Point(-winSize.width * m_nCurPage, 0);
+	//这个函数比setContentOffset多了一个参数，第二个参数是设置时间的，就是用多长的时间来改变偏移量  
+	this->scrollview->setContentOffsetInDuration(adjustPoint, 0.3f);
 }
