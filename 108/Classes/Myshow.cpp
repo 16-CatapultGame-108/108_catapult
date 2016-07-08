@@ -1,8 +1,8 @@
 #include "Myshow.h"
 #include <string>
-using namespace std;
 #include "SimpleAudioEngine.h"
 
+using namespace std;
 using namespace CocosDenshion;
 
 
@@ -72,7 +72,7 @@ bool Myshow::init()
 	time = Label::createWithBMFont("fonts/futura-48.fnt", "60");
 	time->setColor(Color3B::RED);
 	time->setPosition(visibleSize.width / 2, visibleSize.height - time->getContentSize().height);
-	this->addChild(time, 0);
+	this->addChild(time, 1);
 
 	totalTime = 60;
 	Schedule_();

@@ -34,7 +34,7 @@ bool helpScene::init() {
 
 	auto change = MenuItemImage::create("return1.png", "return2.png", CC_CALLBACK_1(helpScene::return2home, this));
 	auto menutoggle2 = Menu::create(change, NULL);
-	menutoggle2->setPosition(Director::getInstance()->getVisibleSize().width * 0.8, Director::getInstance()->getVisibleSize().height * 0.8);
+	menutoggle2->setPosition(Director::getInstance()->getVisibleSize().width * 0.85, Director::getInstance()->getVisibleSize().height * 0.8);
 	this->addChild(menutoggle2, 1);
 
 	return true;
@@ -42,6 +42,5 @@ bool helpScene::init() {
 
 void helpScene::return2home(Ref *ref) {
 	this->stopAllActions();
-	auto scene = MainPage::createScene();
-	Director::getInstance()->replaceScene(scene);
+	Director::getInstance()->popScene();
 }

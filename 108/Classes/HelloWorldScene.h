@@ -11,8 +11,6 @@ public:
 	static HelloWorld* create(PhysicsWorld* world);
 	bool init(PhysicsWorld* world);
 
-
-
 	void testKeyboardEvent();
 	void pressA();
 	void pressW();
