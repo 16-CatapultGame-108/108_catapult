@@ -3,6 +3,7 @@
 #include "ChooseLevel.h"
 #include "SimpleAudioEngine.h"
 #include "setting.h"
+#include "Myshow.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -35,7 +36,7 @@ bool MainPage::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto background = Sprite::create("background1.jpg");
+	auto background = Sprite::create("Mainpage/background1.jpg");
 	background->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	this->addChild(background, 0);
 	
@@ -48,9 +49,9 @@ bool MainPage::init()
 	label1->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 3 * visibleSize.height / 4));
 	this->addChild(label1, 1);
 
-	auto musicOnItem = MenuItemImage::create("laba1.png", "laba1.png");
+	auto musicOnItem = MenuItemImage::create("Mainpage/laba1.png", "Mainpage/laba1.png");
 	musicOnItem->setUserData((void *)"ON");
-	auto musicOffItem = MenuItemImage::create("laba2.png", "laba2.png");
+	auto musicOffItem = MenuItemImage::create("Mainpage/laba2.png", "Mainpage/laba2.png");
 	musicOffItem->setUserData((void *)"OFF");
 	auto menuToggle = MenuItemToggle::createWithCallback([](Ref* obj){
 		MenuItemFont *item = (MenuItemFont*)((MenuItemToggle *)obj)->getSelectedItem();
@@ -67,15 +68,15 @@ bool MainPage::init()
 	menu->setPosition(Point::ZERO);
 	this->addChild(menu, 1);
 
-	auto end = MenuItemImage::create("end1.png", "end2.png", CC_CALLBACK_1(MainPage::closegame, this));
+	auto end = MenuItemImage::create("Mainpage/end1.png", "Mainpage/end2.png", CC_CALLBACK_1(MainPage::closegame, this));
 	auto endmenutoggle = Menu::create(end, NULL);
 	endmenutoggle->setPosition(visibleSize.width - 100, 80);
 	this->addChild(endmenutoggle, 1);
 
 	auto tem = Label::createWithTTF("Menu", "fonts/arial.ttf", 30);
-	auto start = MenuItemImage::create("start1.png", "start2.png", CC_CALLBACK_1(MainPage::startscene, this));
-	auto help = MenuItemImage::create("help1.png", "help2.png", CC_CALLBACK_1(MainPage::helpscene, this));
-	auto setting = MenuItemImage::create("setting1.png", "setting2.png", CC_CALLBACK_1(MainPage::setting, this));
+	auto start = MenuItemImage::create("Mainpage/start1.png", "Mainpage/start2.png", CC_CALLBACK_1(MainPage::startscene, this));
+	auto help = MenuItemImage::create("Mainpage/help1.png", "Mainpage/help2.png", CC_CALLBACK_1(MainPage::helpscene, this));
+	auto setting = MenuItemImage::create("Mainpage/setting1.png", "Mainpage/setting2.png", CC_CALLBACK_1(MainPage::setting, this));
 	auto menutoggle = Menu::create(start, setting, help, NULL);
 	menutoggle->setPosition(Director::getInstance()->getVisibleSize().width * 0.5, Director::getInstance()->getVisibleSize().height * 0.35);
 	menutoggle->alignItemsVerticallyWithPadding(tem->getContentSize().height / 3);

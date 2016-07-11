@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Myshow.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
@@ -34,6 +35,8 @@ private:
 	EventDispatcher* dispatcher;
 	Sprite *player;
 
+	Myshow* myshow;
+
 	//键盘响应有关
 	bool flagA = true;//代表是否能响应Key_A
 	bool flagW = true;
@@ -41,6 +44,8 @@ private:
 	bool mousedown = false;            //是否按下鼠标左键
 	bool readyLaunch = false;          //是否能够发射
 	int mouse_x, mouse_y;              //当前鼠标坐标
-	ProgressTimer* pro1;               //蓄力进度条
+	ProgressTimer* pro1;
+	bool full = false;
+		//蓄力进度条
 };
 

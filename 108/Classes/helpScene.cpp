@@ -23,7 +23,7 @@ bool helpScene::init() {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto background2 = Sprite::create("background2.jpg");
+	auto background2 = Sprite::create("HelpScene/background2.jpg");
 	background2->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	this->addChild(background2, 0);
 

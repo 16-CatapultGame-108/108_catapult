@@ -6,13 +6,19 @@ using namespace std;
 using namespace CocosDenshion;
 
 
-Myshow* Myshow::myshow = NULL;
-Myshow* Myshow::getInstance() {
-	if (myshow == NULL) {
-		myshow = new Myshow();
-		myshow->init();
-	}
-	return myshow;
+Scene* Myshow::createScene()
+{
+	// 'scene' is an autorelease object
+	auto scene = Scene::create();
+
+	// 'layer' is an autorelease object
+	auto layer = Myshow::create();
+
+	// add layer as a child to scene
+	scene->addChild(layer);
+
+	// return the scene
+	return scene;
 }
 
 
@@ -28,17 +34,7 @@ void Myshow::updateTime(float dt){
 }
 
 
-void Myshow::preloadMusic()
-{
-	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("music/bgm.mp3");
-	SimpleAudioEngine::getInstance()->preloadEffect("music/player_skill.mp3");
-}
 
-
-void Myshow::playBgm()
-{
-	SimpleAudioEngine::getInstance()->playBackgroundMusic("music/bgm.mp3", true);
-}
 
 void Myshow::playEffect(std::string s)
 {
@@ -54,6 +50,7 @@ void Myshow::hurtplayer(float a) {
 	}
 }
 
+
 // on "init" you need to initialize your instance
 bool Myshow::init()
 {
@@ -63,7 +60,6 @@ bool Myshow::init()
     {
         return false;
     }
-    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -78,7 +74,7 @@ bool Myshow::init()
 	Schedule_();
 
 	//background
-	Sprite* bg = Sprite::create("1/bg.jpg");
+	Sprite* bg = Sprite::create("Myshow/bg.jpg");
 	float oddsY = bg->getContentSize().height / visibleSize.height;
 	float odds = bg->getContentSize().width / visibleSize.width;
 	bg->setScaleY(1 / oddsY);
@@ -87,7 +83,7 @@ bool Myshow::init()
 	this->addChild(bg, 0);
 
 	//player blood
-	auto progressSprite = Sprite::create("blood.jpg");
+	auto progressSprite = Sprite::create("Myshow/blood.jpg");
 	blood = ProgressTimer::create(progressSprite);
 	blood->setType(ProgressTimer::Type::BAR);
 	blood->setMidpoint(ccp(0, 0.5));

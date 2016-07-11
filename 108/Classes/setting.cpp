@@ -26,7 +26,7 @@ bool Setting::init() {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto background3 = Sprite::create("background3.jpg");
+	auto background3 = Sprite::create("Setting/background3.jpg");
 	background3->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	this->addChild(background3, 0);
 
@@ -46,7 +46,7 @@ bool Setting::init() {
 	label2->setPosition(Vec2(origin.x + visibleSize.width * 0.3, origin.y + visibleSize.height * 2 / 5));
 	this->addChild(label2, 1);
 
-	ControlSlider* slider = ControlSlider::create("bgFile.jpg", "progressFile.jpg", "thumbFile.jpg");
+	ControlSlider* slider = ControlSlider::create("Setting/bgFile.jpg", "Setting/progressFile.jpg", "Setting/thumbFile.jpg");
 	slider->setPosition(Vec2(visibleSize.width * 3 / 5 + origin.x, visibleSize.height * 3 / 5 + origin.y));
 	//设置滑动条的范围  
 	slider->setMinimumValue(-15);
@@ -58,7 +58,7 @@ bool Setting::init() {
 	slider->addTargetWithActionForControlEvents(this, cccontrol_selector(Setting::sliderChange), Control::EventType::VALUE_CHANGED);
 	this->addChild(slider, 1);
 
-	ControlSlider* slider2 = ControlSlider::create("bgFile.jpg", "progressFile.jpg", "thumbFile.jpg");
+	ControlSlider* slider2 = ControlSlider::create("Setting/bgFile.jpg", "Setting/progressFile.jpg", "Setting/thumbFile.jpg");
 	slider2->setPosition(Vec2(visibleSize.width * 3 / 5 + origin.x, visibleSize.height * 2 / 5 + origin.y));
 	//设置滑动条的范围  
 	slider2->setMinimumValue(-15);

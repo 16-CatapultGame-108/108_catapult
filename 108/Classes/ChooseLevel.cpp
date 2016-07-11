@@ -35,7 +35,7 @@ bool ChooseLevel::init()
 	Layer* layer = Layer::create();
 	for (int i = 0; i < 3; i++)
 	{
-		String * string = String::createWithFormat("%d.jpg", i);
+		String * string = String::createWithFormat("ChooseLevel/%d.jpg", i);
 		Sprite * sprite = Sprite::create(string->getCString());
 		sprite->setScale(2.0, 2.0);
 		//将所有的精灵都放到屏幕的中间显示
