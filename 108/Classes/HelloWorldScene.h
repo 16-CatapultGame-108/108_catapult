@@ -11,6 +11,11 @@ public:
 	static HelloWorld* create(PhysicsWorld* world);
 	bool init(PhysicsWorld* world);
 
+	virtual void update(float dt); //帧刷新
+	//virtual void onEnter();
+	void testMouseEvent(); //鼠标控制时间
+	void Launch(double power);//发射炮弹
+
 	void testKeyboardEvent();
 	void pressA();
 	void pressW();
@@ -33,5 +38,9 @@ private:
 	bool flagA = true;//代表是否能响应Key_A
 	bool flagW = true;
 
+	bool mousedown = false;            //是否按下鼠标左键
+	bool readyLaunch = false;          //是否能够发射
+	int mouse_x, mouse_y;              //当前鼠标坐标
+	ProgressTimer* pro1;               //蓄力进度条
 };
 
