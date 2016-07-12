@@ -137,13 +137,13 @@ bool MainPage::init()
 void MainPage::helpscene(Ref *ref) {
 	this->stopAllActions();
 	auto scene = helpScene::createScene();
-	Director::getInstance()->pushScene(TransitionFadeTR::create(.5, scene));
+	Director::getInstance()->pushScene(TransitionSplitRows::create(.5, scene));
 }
 
 void MainPage::startscene(Ref *ref) {
 	this->stopAllActions();
 	auto scene = ChooseLevel::createScene();
-	Director::getInstance()->pushScene(TransitionFadeTR::create(.5, scene));
+	Director::getInstance()->pushScene(TransitionSplitRows::create(.5, scene));
 }
 
 void MainPage::closegame(Ref *ref) {
@@ -153,5 +153,5 @@ void MainPage::closegame(Ref *ref) {
 void MainPage::setting(Ref *ref) {
 	this->stopAllActions();
 	auto scene = Setting::createScene();
-	Director::getInstance()->pushScene(TransitionFadeTR::create(.5, scene));
+	Director::getInstance()->pushScene(TransitionSplitRows::create(.5, scene));
 }

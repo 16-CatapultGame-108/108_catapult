@@ -21,7 +21,7 @@ public:
 	void pressA();
 	void pressW();
 	void pressspace();
-
+	void pause(Ref *ref);
 	/*void testContact();
 	bool onContactBegan(PhysicsContact& contact);
 	void testContactFilter();*/

@@ -31,6 +31,11 @@ bool ChooseLevel::init()
 	Size winSize = Director::getInstance()->getWinSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+	auto change = MenuItemImage::create("return1.png", "return2.png", CC_CALLBACK_1(ChooseLevel::return2home, this));
+	auto menutoggle = Menu::create(change, NULL);
+	menutoggle->setPosition(Director::getInstance()->getVisibleSize().width * 0.85, Director::getInstance()->getVisibleSize().height * 0.8);
+	this->addChild(menutoggle, 1);
+
 	scrollview = ScrollView::create(Size(winSize.width, winSize.height));
 	Layer* layer = Layer::create();
 	for (int i = 0; i < 3; i++)
@@ -58,7 +63,6 @@ bool ChooseLevel::init()
 	listener->onTouchEnded = CC_CALLBACK_2(ChooseLevel::onTouchEnded, this);
 	listener->setSwallowTouches(true);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-
 
     return true;
 }
@@ -97,11 +101,11 @@ void ChooseLevel::onTouchEnded(Touch* touch, Event* event) {
 		Size winSize = Director::getInstance()->getWinSize();
 		if (x >= winSize.width / 2 - 220 && x <= winSize.width / 2 + 220 && y >= winSize.height / 2 - 124 && y <= winSize.height / 2 + 124)
 		{
-			Director::getInstance()->replaceScene(HelloWorld::createScene()); //choose scene1
+			Director::getInstance()->pushScene(TransitionShrinkGrow::create(.5, HelloWorld::createScene())); //choose scene1
 		}
 		if (x >= 1.5* winSize.width - 220 && x <= 1.5 * winSize.width + 220 && y >= winSize.height / 2 - 124 && y <= winSize.height / 2 + 124)
 		{
-			Director::getInstance()->replaceScene(HelloWorld::createScene());   //choose scene2
+			Director::getInstance()->pushScene(TransitionShrinkGrow::create(.5, HelloWorld::createScene()));   //choose scene2
 		}
 		//this->adjustScrollView(0);
 	}
@@ -131,4 +135,8 @@ void ChooseLevel::adjustScrollView(float offset)
 	Point adjustPoint = Point(-winSize.width * m_nCurPage, 0);
 	//这个函数比setContentOffset多了一个参数，第二个参数是设置时间的，就是用多长的时间来改变偏移量  
 	this->scrollview->setContentOffsetInDuration(adjustPoint, 0.3f);
+}
+
+void ChooseLevel::return2home(Ref* ref) {
+	Director::getInstance()->popScene();
 }

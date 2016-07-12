@@ -19,6 +19,7 @@ public:
 
 	void onTouchEnded(Touch* touch, Event* event);//´¥Ãþ½áÊø·½·¨
 	void adjustScrollView(float offset);
+	void return2home(Ref* ref);
 private:
 	ScrollView* scrollview;
 	
