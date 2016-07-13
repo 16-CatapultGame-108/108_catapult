@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Myshow.h"
+#include "EnemyLayer.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
@@ -34,7 +35,7 @@ private:
 	PhysicsWorld* m_world;
 	EventDispatcher* dispatcher;
 	Sprite *player;
-
+	cocos2d::Layer* enemys;
 	Myshow* myshow;
 
 	//º¸≈ÃœÏ”¶”–πÿ
