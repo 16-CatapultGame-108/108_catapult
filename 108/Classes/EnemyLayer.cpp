@@ -28,7 +28,7 @@ bool EnemyLayer::init() {
     if (!Layer::init()) {
         return false;
     }
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("enemy/texture.plist", "enemy/texture.pvr.ccz");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Enemy/texture.plist", "Enemy/texture.pvr.ccz");
     
     auto animation = createAnimation("player", 8, 0.06f);
     AnimationCache::getInstance()->addAnimation(animation, "player");
