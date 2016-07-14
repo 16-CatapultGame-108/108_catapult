@@ -15,6 +15,7 @@ USING_NS_CC;
 
 class Enemy : public Sprite {
 public:
+    static float offx,offy;
     Enemy();
     bool init(Vec2 loc);
     static Enemy* create(Vec2 loc, Sprite* target);
@@ -40,7 +41,7 @@ public:
     //get the position of player and shootArrow
     void attack(float dt);
     bool died();
-
+    
 private:
     Sprite* bow;
     Sprite* enemyBody;

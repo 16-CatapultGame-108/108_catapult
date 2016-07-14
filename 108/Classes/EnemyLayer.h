@@ -20,12 +20,14 @@ public:
     EnemyLayer();
     static cocos2d::Layer* createScene(Sprite* target);
     virtual bool init();
+    void removeDied();
     void update(float dt);
     Animation* createAnimation(std::string prefixName, int framesNum, float delay);
     
 private:
     static Sprite* player;
     Vector<Enemy*> enemys;
+    Vector<Enemy*> died;
     Size winSize;
     int enemyn;
 };

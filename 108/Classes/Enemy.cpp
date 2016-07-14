@@ -8,7 +8,12 @@
 
 #include "Enemy.h"
 #include "math.h"
+#define random(x) (rand()%x)
 #include "Arrow.h"
+float Enemy:: offx = -180;
+float Enemy:: offy = 80;
+
+
 
 Enemy::Enemy() {
     winSize = Director::getInstance()->getWinSize();
@@ -38,14 +43,14 @@ bool Enemy::init(Vec2 loc) {
     }
     createEnemy(loc);
     createHpBar(loc);
-    createBow(loc);
+    //createBow(loc);
     schedule(schedule_selector(Enemy::attack), 5.0f);
     scheduleUpdate();
     return true;
 }
 
 void Enemy::createEnemy(Vec2 loc) {
-    enemyBody = Sprite::createWithSpriteFrameName("playerbody.png");
+    enemyBody = Sprite::createWithSpriteFrameName("normal1.png");
     eSize = Size(enemyBody->getContentSize().width, enemyBody->getContentSize().height);
     //enemyBody->setAnchorPoint(Vec2(0.5f,0.5f));
     this->setPosition(Vec2(loc.x, loc.y+0.5f*eSize.height));
@@ -54,7 +59,7 @@ void Enemy::createEnemy(Vec2 loc) {
 }
 
 void Enemy::createHpBar(Vec2 loc) {
-    hpBar = ProgressTimer::create(Sprite::create("blood.jpg"));
+    hpBar = ProgressTimer::create(Sprite::create("Myshow/blood.jpg"));
     hpBar->setType(ProgressTimer::Type::BAR);
     hpBar->setMidpoint(Vec2(0, 0.5f));
     hpBar->setBarChangeRate(Vec2(1, 0));
@@ -77,8 +82,15 @@ void Enemy::move() {
     Vec2 targetpos = t->getParent()->convertToWorldSpace(t->getPosition());
     Vec2 mypos = this->getParent()->convertToWorldSpace(this->getPosition());
     float dist = fabsf(targetpos.x - mypos.x);
-    if (winSize.width*0.2 < dist && dist < winSize.width*0.5)
+    if (winSize.width*0.2 < dist && dist < winSize.width*0.5) {
+        int a = random(10);
+        if (a > 5) {
+            moveFoward();
+        } else {
+            moveBackward();
+        }
         return;
+    }
     if (mypos.x < winSize.width*0.1)
         moveBackward();
     else
@@ -114,7 +126,7 @@ void Enemy::rotateBow() {
     auto speed = 0.5 / M_PI;
     auto rotateDuration = fabs(rotateRadians * speed);
     bow->runAction( Sequence::create(RotateTo::create(rotateDuration, rotateDegrees),
-                                             NULL));
+                                     NULL));
 }
 //let enemy-layer hurt the target
 //how to get `blood`?
@@ -126,21 +138,30 @@ void Enemy::hurt() {
 
 //get the position of player and shootArrow
 void Enemy::attack(float dt) {
-    auto animation = AnimationCache::getInstance()->getAnimation("player");
+    auto animation = AnimationCache::getInstance()->getAnimation("beforeAttack");
     auto animate = Animate::create(animation);
+    auto animation2 = AnimationCache::getInstance()->getAnimation("afterAttack");
+    auto animate2 = Animate::create(animation2);
     auto delayTime = DelayTime::create(0.5f);
     calControlpoint();
-    auto funcall0 = CallFunc::create(CC_CALLBACK_0(Enemy::rotateBow, this));
+    //auto funcall0 = CallFunc::create(CC_CALLBACK_0(Enemy::rotateBow, this));
     auto funcall1= CallFunc::create(CC_CALLBACK_0(Enemy::shootArrow, this));
     auto funcall2= CallFunc::create(CC_CALLBACK_0(Enemy::move, this));
-    enemyBody->runAction(Sequence::create(animate, funcall0, funcall1, delayTime, funcall2,NULL));
+    enemyBody->runAction(Sequence::create(animate, funcall1, delayTime, animate2, funcall2,NULL));
 }
 
 void Enemy::shootArrow() {
-    Arrow* arrow = Arrow::createArrow(bow->getRotation(), this->target);
+    Vec2 cp = controlP;
+    cp.y /= 2;
+    auto rotateRadians = cp.getAngle();
+    auto rotateDegrees = CC_RADIANS_TO_DEGREES(rotateRadians);
+    Arrow* arrow = Arrow::createArrow(rotateDegrees, this->target);
     bezier.controlPoint = controlP;
     bezier.endPosition = Vec2(controlP.x*2,0);
-    this->addChild(arrow);
+    this->getParent()->addChild(arrow,5);
+    Vec2 pos = this->getPosition();
+    Vec2 apos = Vec2(pos.x+Enemy::offx,pos.y+Enemy::offy);
+    arrow->setPosition(this->getParent()->convertToWorldSpace(apos));
     this->arrow = arrow;
     auto Action = ArrowBezier::create(1,bezier);
     auto clean = CallFunc::create(CC_CALLBACK_0(Enemy::removeArrow, this));
@@ -151,14 +172,14 @@ void Enemy::shootArrow() {
 void Enemy::removeArrow() {
     aftershot = false;
     notified = false;
-    this->cocos2d::Node::removeChild(this->arrow);
+    this->getParent()->cocos2d::Node::removeChild(this->arrow);
 }
 
 void Enemy::calControlpoint() {
     float dist = (target->getParent()->convertToWorldSpace(target->getPosition()).x
-                  -this->getParent()->convertToWorldSpace(this->getPosition()).x);
+                  -this->getParent()->convertToWorldSpace(this->getPosition()).x)-offx;
     //float y = (winSize.width - dist)*winSize.height/winSize.width*2;
-    float y = 200;
+    float y = 400;
     float x = dist/2;
     controlP = Vec2(x,y);
 }
@@ -171,6 +192,7 @@ void Enemy::update(float dt) {
 }
 
 bool Enemy::died() {
-    return !alive;
+    //return !alive;
+    return false;
 }
 

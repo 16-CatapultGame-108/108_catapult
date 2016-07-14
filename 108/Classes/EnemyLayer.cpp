@@ -7,13 +7,16 @@
 //
 
 #include "EnemyLayer.h"
+#include<time.h>
 
 Sprite* EnemyLayer::player = NULL;
 
 EnemyLayer::EnemyLayer () {
+    srand((int)time(0));
     this->enemyn = 1;
     this->winSize = Director::getInstance()->getWinSize();
     enemys.clear();
+    died.clear();
     init();
 }
 
@@ -28,12 +31,14 @@ bool EnemyLayer::init() {
     if (!Layer::init()) {
         return false;
     }
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Enemy/texture.plist", "Enemy/texture.pvr.ccz");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Enemy/enemy.plist", "Enemy/enemy.png");
     
-    auto animation = createAnimation("player", 8, 0.06f);
-    AnimationCache::getInstance()->addAnimation(animation, "player");
+    auto animation = createAnimation("hit1_", 12, 0.06f);
+    AnimationCache::getInstance()->addAnimation(animation, "beforeAttack");
+    auto animation2 = createAnimation("hit2_", 7, 0.06f);
+    AnimationCache::getInstance()->addAnimation(animation2, "afterAttack");
     for (int i = 0; i < enemyn; i++) {
-        enemys.pushBack(Enemy::create(Vec2(winSize.width*5/6,50), EnemyLayer::player));
+        enemys.pushBack(Enemy::create(Vec2(winSize.width*5/6,0), EnemyLayer::player));
     }
     for (auto sp:enemys) {
         this->addChild(sp);
@@ -56,10 +61,21 @@ Animation* EnemyLayer::createAnimation(std::string prefixName, int framesNum, fl
     return Animation::createWithSpriteFrames(animFrames, delay);
 }
 
+void EnemyLayer::removeDied() {
+    for (auto sp:died) {
+        enemys.eraseObject(sp);
+        this->removeChild(sp);
+    }
+    died.clear();
+}
+
 void EnemyLayer::update(float dt) {
     for (auto sp:enemys) {
         if (sp->died()) {
-            this->removeChild(sp);
+            auto delayTime = DelayTime::create(1.0f);
+            auto clean = CallFunc::create(CC_CALLBACK_0(EnemyLayer::removeDied, this));
+            died.pushBack(sp);
+            this->runAction(Sequence::create(delayTime,clean,NULL));
         }
     }
 }

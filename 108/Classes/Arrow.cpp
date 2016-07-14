@@ -14,7 +14,7 @@ Arrow::Arrow(){}
 
 Arrow* Arrow::createArrow(float f, Sprite* t) {
     Arrow* ar = new Arrow();
-    ar->arrowBody = Sprite::createWithSpriteFrameName("arrow1.png");
+    ar->arrowBody = Sprite::create("HelloWorld/stone.png");
     ar->setPosition(Vec2(0,0));
     //ar->setRotation(-f);
     ar->addChild(ar->arrowBody);
