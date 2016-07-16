@@ -3,7 +3,6 @@
 #include "ChooseLevel.h"
 #include "SimpleAudioEngine.h"
 #include "setting.h"
-#include "Myshow.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -35,11 +34,15 @@ bool MainPage::init()
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-	auto background = Sprite::create("Mainpage/background1.jpg");
-	background->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-	this->addChild(background, 0);
 	
+	Sprite* background = Sprite::create("Mainpage/background1.jpg");
+	float oddsY = background->getContentSize().height / visibleSize.height;
+	float odds = background->getContentSize().width / visibleSize.width;
+	background->setScaleY(1 / oddsY);
+	background->setScaleX(1 / odds);
+	background->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	this->addChild(background, 0);
+
 	SimpleAudioEngine::getInstance()->preloadEffect("music/player_skill.mp3");
 	SimpleAudioEngine::getInstance()->playBackgroundMusic("music/bgm.mp3",true);
 

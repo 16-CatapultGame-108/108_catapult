@@ -1,52 +1,48 @@
-#pragma once
-#include <string>
-#include "Myshow.h"
-#include "EnemyLayer.h"
 #include "cocos2d.h"
+#include "pause.h"
+#include "GameOver.h"
+#include "EnemyLayer.h"
 
 USING_NS_CC;
 
-class HelloWorld : public Layer
-{
+class HelloWorld : public cocos2d::Layer {
 public:
-	static Scene* createScene();
+	static cocos2d::Scene* createScene();
 	static HelloWorld* create(PhysicsWorld* world);
-	bool init(PhysicsWorld* world);
+	virtual bool init(PhysicsWorld* world);
 
+	void pause(Ref* ref);
+	void gameOver();
+	void updateTime(float temtime);
+
+	//炮弹
+	void prepare();
+	void Launch(double power);
 	virtual void update(float dt); //帧刷新
-	//virtual void onEnter();
-	void testMouseEvent(); //鼠标控制时间
-	void Launch(double power);//发射炮弹
 
-	void testKeyboardEvent();
-	void pressA();
-	void pressW();
-	void pressspace();
-	void pause(Ref *ref);
-	/*void testContact();
-	bool onContactBegan(PhysicsContact& contact);
-	void testContactFilter();*/
+	bool onContactBegan(cocos2d::PhysicsContact& contact);
 
-
-private:
-	HelloWorld();
-	~HelloWorld();
-
-	PhysicsWorld* m_world;
-	EventDispatcher* dispatcher;
-	Sprite *player;
 	cocos2d::Layer* enemys;
-	Myshow* myshow;
 
-	//键盘响应有关
-	bool flagA = true;//代表是否能响应Key_A
-	bool flagW = true;
+	//力度条
+	ProgressTimer* timer;
+	//计时器
+	float totalTime;
+	cocos2d::Label* time;
+	//石头
+	Sprite* sp;
+	bool sp_ = false;//一次只能投一个石头
+	//player
+	Sprite* player1;
+	int health1;
+	ProgressTimer * blood1;
+	Sprite* player2;
+	int health2;
+	ProgressTimer * blood2;
 
-	bool mousedown = false;            //是否按下鼠标左键
-	bool readyLaunch = false;          //是否能够发射
-	int mouse_x, mouse_y;              //当前鼠标坐标
-	ProgressTimer* pro1;
+	int mouse_x, mouse_y;//当前鼠标坐标
+	
+	bool mousedown = false;
+	bool readyLaunch = false;
 	bool full = false;
-		//蓄力进度条
 };
-
