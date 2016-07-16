@@ -37,7 +37,7 @@ bool EnemyLayer::init() {
     AnimationCache::getInstance()->addAnimation(animation, "beforeAttack");
     auto animation2 = createAnimation("hit2_", 7, 0.06f);
     AnimationCache::getInstance()->addAnimation(animation2, "afterAttack");
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < enemyn; i++) {
         enemys.pushBack(Enemy::create(Vec2(winSize.width*5/6,0), EnemyLayer::player));
     }
     for (auto sp:enemys) {

@@ -23,13 +23,9 @@ bool helpScene::init() {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	Sprite* background = Sprite::create("HelpScene/background2.jpg");
-	float oddsY = background->getContentSize().height / visibleSize.height;
-	float odds = background->getContentSize().width / visibleSize.width;
-	background->setScaleY(1 / oddsY);
-	background->setScaleX(1 / odds);
-	background->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-	this->addChild(background, 0);
+	auto background2 = Sprite::create("HelpScene/background2.jpg");
+	background2->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+	this->addChild(background2, 0);
 
 	auto label1 = Label::createWithTTF("this is help message", "fonts/arial.ttf", 50);
 	label1->setColor(Color3B::RED);

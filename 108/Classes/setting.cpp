@@ -26,13 +26,9 @@ bool Setting::init() {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	Sprite* background = Sprite::create("Setting/background3.jpg");
-	float oddsY = background->getContentSize().height / visibleSize.height;
-	float odds = background->getContentSize().width / visibleSize.width;
-	background->setScaleY(1 / oddsY);
-	background->setScaleX(1 / odds);
-	background->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-	this->addChild(background, 0);
+	auto background3 = Sprite::create("Setting/background3.jpg");
+	background3->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+	this->addChild(background3, 0);
 
 	auto change = MenuItemImage::create("return1.png", "return2.png", CC_CALLBACK_1(Setting::return2home, this));
 	auto menutoggle2 = Menu::create(change, NULL);
