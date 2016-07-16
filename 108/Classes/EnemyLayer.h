@@ -20,7 +20,9 @@ public:
     EnemyLayer();
     static cocos2d::Layer* createScene(Sprite* target);
     virtual bool init();
-    void removeDied();
+   
+	
+	void removeDied();
     void update(float dt);
     Animation* createAnimation(std::string prefixName, int framesNum, float delay);
     
