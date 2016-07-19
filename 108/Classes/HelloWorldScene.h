@@ -35,7 +35,9 @@ public:
 	//player
 	Sprite* player1;
 	int health1;
+	int blackart1;
 	ProgressTimer * blood1;
+	ProgressTimer * magic1;
 	Sprite* player2;
 	int health2;
 	ProgressTimer * blood2;
