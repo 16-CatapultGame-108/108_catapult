@@ -20,6 +20,10 @@ EnemyLayer::EnemyLayer () {
     init();
 }
 
+Vector<Enemy*> EnemyLayer::getEnemys() {
+    return enemys;
+}
+
 Layer* EnemyLayer::createScene(cocos2d::Sprite *target) {
     EnemyLayer::player = target;
     auto layer = new EnemyLayer();
@@ -30,15 +34,15 @@ Layer* EnemyLayer::createScene(cocos2d::Sprite *target) {
 bool EnemyLayer::init() {
     if (!Layer::init()) {
         return false;
-    }
+    }    
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Enemy/enemy.plist", "Enemy/enemy.png");
     
     auto animation = createAnimation("hit1_", 12, 0.06f);
     AnimationCache::getInstance()->addAnimation(animation, "beforeAttack");
     auto animation2 = createAnimation("hit2_", 7, 0.06f);
     AnimationCache::getInstance()->addAnimation(animation2, "afterAttack");
-    for (int i = 0; i < 1; i++) {
-        enemys.pushBack(Enemy::create(Vec2(winSize.width*5/6,0), EnemyLayer::player));
+    for (int i = 0; i < enemyn; i++) {
+        enemys.pushBack(Enemy::create(Vec2(winSize.width*5/6,50), EnemyLayer::player));
     }
     for (auto sp:enemys) {
         this->addChild(sp);

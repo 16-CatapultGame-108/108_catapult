@@ -10,8 +10,8 @@
 #include "math.h"
 #define random(x) (rand()%x)
 #include "Arrow.h"
-float Enemy:: offx = -180;
-float Enemy:: offy = 80;
+float Enemy:: offx = -90;
+float Enemy:: offy = 40;
 
 
 
@@ -33,6 +33,18 @@ Enemy* Enemy::create(Vec2 loc, Sprite* t) {
     Enemy* e = new Enemy();
     e->target = t;
     e->init(loc);
+    //
+    Size ss = e->enemyBody->getContentSize();
+    Size st;
+    st.width = ss.width/3;
+    st.height = ss.height;
+    PhysicsBody* b = PhysicsBody::createBox(st);
+    b->setMass(1000);
+    e->setPhysicsBody(b);
+    e->getPhysicsBody()->setContactTestBitmask(0xFFFFFFFF);
+    //b->setDynamic(false);
+    e->setTag(1);
+    //
     e->autorelease();
     return e;
 }
@@ -157,16 +169,17 @@ void Enemy::shootArrow() {
     auto rotateDegrees = CC_RADIANS_TO_DEGREES(rotateRadians);
     Arrow* arrow = Arrow::createArrow(rotateDegrees, this->target);
     bezier.controlPoint = controlP;
-    bezier.endPosition = Vec2(controlP.x*2,0);
+    bezier.endPosition = Vec2(controlP.x*2,-(enemyBody->getContentSize().height)/2-offy);
     this->getParent()->addChild(arrow,5);
     Vec2 pos = this->getPosition();
     Vec2 apos = Vec2(pos.x+Enemy::offx,pos.y+Enemy::offy);
     arrow->setPosition(this->getParent()->convertToWorldSpace(apos));
     this->arrow = arrow;
     auto Action = ArrowBezier::create(1,bezier);
+    auto delayTime = DelayTime::create(0.5f);
     auto clean = CallFunc::create(CC_CALLBACK_0(Enemy::removeArrow, this));
     aftershot = true;
-    arrow->runAction(Sequence::create(Action,clean,NULL));
+    arrow->runAction(Sequence::create(Action,delayTime,clean,NULL));
 }
 
 void Enemy::removeArrow() {
@@ -185,14 +198,18 @@ void Enemy::calControlpoint() {
 }
 
 void Enemy::update(float dt) {
-    if (aftershot && !notified && arrow->getf()) {
-        notified = true;
-        this->behurt();
+    setRotation(0);
+    if (aftershot && !notified) {
+        if (arrow->getf()) {
+            notified = true;
+        //this->behurt();
+        //射中player，分发事件
+            Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("hurtPlayer");
+        }
     }
 }
 
 bool Enemy::died() {
-    //return !alive;
-    return false;
+    return !alive;
 }
 
