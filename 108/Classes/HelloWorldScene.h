@@ -19,6 +19,7 @@ public:
 	void prepare();
 	void Launch(double power);
 	virtual void update(float dt); //帧刷新
+	void hurtPlayer(float);
 
 	bool onContactBegan(cocos2d::PhysicsContact& contact);
 
@@ -26,6 +27,7 @@ public:
 
 	//力度条
 	ProgressTimer* timer;
+	Sprite* bar;
 	//计时器
 	float totalTime;
 	cocos2d::Label* time;
