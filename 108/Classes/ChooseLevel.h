@@ -28,6 +28,6 @@ private:
 	Point m_touchPoint;
 
 	Point m_offsetPoint;
-	int m_nCurPage;
+	int m_nCurPage = 0;
 };
 

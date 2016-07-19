@@ -31,6 +31,15 @@ bool ChooseLevel::init()
 	Size winSize = Director::getInstance()->getWinSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+	auto background = Sprite::create("ChooseLevel/background.jpg");
+	background->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	float oddsY = background->getContentSize().height / visibleSize.height;
+	float odds = background->getContentSize().width / visibleSize.width;
+	background->setScaleY(1 / oddsY);
+	background->setScaleX(1 / odds);
+	background->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	this->addChild(background);
+
 	auto change = MenuItemImage::create("return1.png", "return2.png", CC_CALLBACK_1(ChooseLevel::return2home, this));
 	auto menutoggle = Menu::create(change, NULL);
 	menutoggle->setPosition(Director::getInstance()->getVisibleSize().width * 0.85, Director::getInstance()->getVisibleSize().height * 0.8);
@@ -42,7 +51,7 @@ bool ChooseLevel::init()
 	{
 		String * string = String::createWithFormat("ChooseLevel/%d.jpg", i);
 		Sprite * sprite = Sprite::create(string->getCString());
-		sprite->setScale(2.0, 2.0);
+		sprite->setScale(.4);
 		//将所有的精灵都放到屏幕的中间显示
 		sprite->setPosition(ccpAdd(ccp(winSize.width / 2, winSize.height / 2),
 			ccp(winSize.width*i, 0)));
@@ -99,15 +108,11 @@ void ChooseLevel::onTouchEnded(Touch* touch, Event* event) {
 		CCLOG("%f", y);
 
 		Size winSize = Director::getInstance()->getWinSize();
-		if (x >= winSize.width / 2 - 220 && x <= winSize.width / 2 + 220 && y >= winSize.height / 2 - 124 && y <= winSize.height / 2 + 124)
+		if (x >= winSize.width / 2 - 200 && x <= winSize.width / 2 + 200 && y >= winSize.height / 2 - 110 && y <= winSize.height / 2 + 110)
 		{
-			Director::getInstance()->pushScene(TransitionShrinkGrow::create(.5, HelloWorld::createScene())); //choose scene1
+			if (m_nCurPage == 0 || m_nCurPage == 1)
+				Director::getInstance()->pushScene(TransitionShrinkGrow::create(.5, HelloWorld::createScene(m_nCurPage + 1))); //choose scene1
 		}
-		if (x >= 1.5* winSize.width - 220 && x <= 1.5 * winSize.width + 220 && y >= winSize.height / 2 - 124 && y <= winSize.height / 2 + 124)
-		{
-			Director::getInstance()->pushScene(TransitionShrinkGrow::create(.5, HelloWorld::createScene()));   //choose scene2
-		}
-		//this->adjustScrollView(0);
 	}
 	else
 	{

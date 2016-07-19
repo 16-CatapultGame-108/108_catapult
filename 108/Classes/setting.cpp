@@ -39,18 +39,15 @@ bool Setting::init() {
 	menutoggle2->setPosition(Director::getInstance()->getVisibleSize().width * 0.85, Director::getInstance()->getVisibleSize().height * 0.8);
 	this->addChild(menutoggle2, 1);
 
-	#pragma execution_character_set("utf-8") 
-	auto label1 = Label::createWithTTF("背景音乐：", "fonts/DFYuanW7-GB2312.ttf", 50);
-	label1->setColor(Color3B::GREEN);
-	label1->setPosition(Vec2(origin.x + visibleSize.width * 0.3, origin.y + visibleSize.height * 3 / 5));
-	this->addChild(label1, 1);
+	auto bgm_ = Sprite::create("Setting/bgm.png");
+	bgm_->setPosition(Vec2(origin.x + visibleSize.width * 0.3, origin.y + visibleSize.height * 3 / 5));
+	this->addChild(bgm_, 1);
 
-	auto label2 = Label::createWithTTF("音效：", "fonts/DFYuanW7-GB2312.ttf", 50);
-	label2->setColor(Color3B::GREEN);
-	label2->setPosition(Vec2(origin.x + visibleSize.width * 0.3, origin.y + visibleSize.height * 2 / 5));
-	this->addChild(label2, 1);
+	auto eff_ = Sprite::create("Setting/eff.png");
+	eff_->setPosition(Vec2(origin.x + visibleSize.width * 0.3, origin.y + visibleSize.height * 2 / 5));
+	this->addChild(eff_, 1);
 
-	ControlSlider* slider = ControlSlider::create("Setting/bgFile.jpg", "Setting/progressFile.jpg", "Setting/thumbFile.jpg");
+	ControlSlider* slider = ControlSlider::create("Setting/bgFile.png", "Setting/progressFile.png", "Setting/thumbFile.png");
 	slider->setPosition(Vec2(visibleSize.width * 3 / 5 + origin.x, visibleSize.height * 3 / 5 + origin.y));
 	//设置滑动条的范围  
 	slider->setMinimumValue(-15);
@@ -62,7 +59,7 @@ bool Setting::init() {
 	slider->addTargetWithActionForControlEvents(this, cccontrol_selector(Setting::sliderChange), Control::EventType::VALUE_CHANGED);
 	this->addChild(slider, 1);
 
-	ControlSlider* slider2 = ControlSlider::create("Setting/bgFile.jpg", "Setting/progressFile.jpg", "Setting/thumbFile.jpg");
+	ControlSlider* slider2 = ControlSlider::create("Setting/bgFile.png", "Setting/progressFile.png", "Setting/thumbFile.png");
 	slider2->setPosition(Vec2(visibleSize.width * 3 / 5 + origin.x, visibleSize.height * 2 / 5 + origin.y));
 	//设置滑动条的范围  
 	slider2->setMinimumValue(-15);

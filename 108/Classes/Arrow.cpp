@@ -15,6 +15,7 @@ Arrow::Arrow(){}
 Arrow* Arrow::createArrow(float f, Sprite* t) {
     Arrow* ar = new Arrow();
     ar->arrowBody = Sprite::create("HelloWorld/stone.png");
+
     ar->addChild(ar->arrowBody);
     ar->f = false;
     ar->t = t;

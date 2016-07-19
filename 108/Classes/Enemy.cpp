@@ -43,7 +43,7 @@ Enemy* Enemy::create(Vec2 loc, Sprite* t) {
     e->setPhysicsBody(b);
     e->getPhysicsBody()->setContactTestBitmask(0xFFFFFFFF);
     //b->setDynamic(false);
-    e->setTag(1);
+    e->setTag(3);
     //
     e->autorelease();
     return e;

@@ -21,13 +21,13 @@ Scene* GameOver::createScene(RenderTexture* sqr, bool wol) {
 	if (wol) {
 		auto label = Label::createWithTTF("You win!", "fonts/DFYuanW7-GB2312.ttf", 80);
 		label->setColor(Color3B::GREEN);
-		label->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height / 2));
+		label->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height * .8));
 		scene->addChild(label, 1);
 	}
 	else {
 		auto label = Label::createWithTTF("You lose!", "fonts/DFYuanW7-GB2312.ttf", 80);
 		label->setColor(Color3B::GREEN);
-		label->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height / 2));
+		label->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height * .8));
 		scene->addChild(label, 1);
 	}
 	// return the scene
@@ -43,7 +43,7 @@ bool GameOver::init() {
 	auto return2home = MenuItemImage::create("pause/return2home1.png", "pause/return2home2.png", CC_CALLBACK_1(GameOver::return2home, this));
 	auto replay = MenuItemImage::create("pause/replay1.png", "pause/replay2.png", CC_CALLBACK_1(GameOver::replay, this));
 	auto menutoggle = Menu::create(replay, return2home, NULL);
-	menutoggle->setPosition(Director::getInstance()->getVisibleSize().width * .8, Director::getInstance()->getVisibleSize().height * 0.8);
+	menutoggle->setPosition(Director::getInstance()->getVisibleSize().width * .5, Director::getInstance()->getVisibleSize().height * 0.4);
 	menutoggle->alignItemsVerticallyWithPadding(30);
 	this->addChild(menutoggle, 2);
 

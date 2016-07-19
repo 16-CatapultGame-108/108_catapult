@@ -31,10 +31,10 @@ bool helpScene::init() {
 	background->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 	this->addChild(background, 0);
 
-	auto label1 = Label::createWithTTF("this is help message", "fonts/arial.ttf", 50);
-	label1->setColor(Color3B::RED);
-	label1->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
-	this->addChild(label1, 1);
+	auto message = Sprite::create("HelpScene/helpmessage.png");
+	message->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	message->setScale(1.2);
+	this->addChild(message);
 
 	auto change = MenuItemImage::create("return1.png", "return2.png", CC_CALLBACK_1(helpScene::return2home, this));
 	auto menutoggle2 = Menu::create(change, NULL);
