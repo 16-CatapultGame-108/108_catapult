@@ -15,32 +15,32 @@ public:
 	void gameOver();
 	void updateTime(float temtime);
 
-	//ÅÚµ¯
+	//ç‚®å¼¹
 	void prepare();
 	void Launch(double power);
-	virtual void update(float dt); //Ö¡Ë¢ĞÂ
+	virtual void update(float dt); //å¸§åˆ·æ–°
 
 	void hurtPlayer(float);
 
 	bool onContactBegan(cocos2d::PhysicsContact& contact);
 
 
-	//Ëæ»ú³öÏÖµÄµÀ¾ß
+	//éšæœºå‡ºç°çš„é“å…·
 	void tools();
 	Sprite* tool1;
 	int tool1_ = false;
 
 	cocos2d::Layer* enemys;
 
-	//Á¦¶ÈÌõ
+	//åŠ›åº¦æ¡
 	ProgressTimer* timer;
 	Sprite* bar;
-	//¼ÆÊ±Æ÷
+	//è®¡æ—¶å™¨
 	float totalTime;
 	cocos2d::Label* time;
-	//Ê¯Í·
+	//çŸ³å¤´
 	Sprite* sp;
-	bool sp_ = false;//Ò»´ÎÖ»ÄÜÍ¶Ò»¸öÊ¯Í·
+	bool sp_ = false;//ä¸€æ¬¡åªèƒ½æŠ•ä¸€ä¸ªçŸ³å¤´
 	//player
 	Sprite* player1;
 	int health1;
@@ -51,9 +51,11 @@ public:
 	int health2 = 100;
 	ProgressTimer * blood2;
 
-	int mouse_x, mouse_y;//µ±Ç°Êó±ê×ø±ê
+	int mouse_x, mouse_y;//å½“å‰é¼ æ ‡åæ ‡
 	
 	bool mousedown = false;
 	bool readyLaunch = false;
 	bool full = false;
+	//player å‡è¡€
+        void hurtPlayer(float p);
 };
