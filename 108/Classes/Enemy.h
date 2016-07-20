@@ -42,11 +42,13 @@ public:
     void attack(float dt);
     bool died();
     
+    Arrow* arrow;
+
+    
 private:
     Sprite* bow;
     Sprite* enemyBody;
     Sprite* target;
-    Arrow* arrow;
     bool aftershot;
     bool notified;
     Size winSize;
