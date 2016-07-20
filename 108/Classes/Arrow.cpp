@@ -15,7 +15,13 @@ Arrow::Arrow(){}
 Arrow* Arrow::createArrow(float f, Sprite* t) {
     Arrow* ar = new Arrow();
     ar->arrowBody = Sprite::create("HelloWorld/stone.png");
-
+    //把石头设置为刚体
+    auto body = PhysicsBody::createCircle(ar->arrowBody->getContentSize().width / 2, PhysicsMaterial(1.0f, 1.0f, 1.0f));
+    ar->setPhysicsBody(body);
+    body->setDynamic(false);
+    ar->setPosition(Vec2(0,0));
+    ar->setTag(5);
+    //
     ar->addChild(ar->arrowBody);
     ar->f = false;
     ar->t = t;
