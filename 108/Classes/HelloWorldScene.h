@@ -1,7 +1,6 @@
 #include "cocos2d.h"
 #include "pause.h"
 #include "GameOver.h"
-#include "EnemyLayer.h"
 
 USING_NS_CC;
 
@@ -15,47 +14,50 @@ public:
 	void gameOver();
 	void updateTime(float temtime);
 
-	//ç‚®å¼¹
+	//ÅÚµ¯
 	void prepare();
 	void Launch(double power);
-	virtual void update(float dt); //å¸§åˆ·æ–°
+	virtual void update(float dt); //Ö¡Ë¢ĞÂ
 
 	void hurtPlayer(float);
 
 	bool onContactBegan(cocos2d::PhysicsContact& contact);
 
+	void simpleAI();
 
-	//éšæœºå‡ºç°çš„é“å…·
+	//Ëæ»ú³öÏÖµÄµÀ¾ß
 	void tools();
 	Sprite* tool1;
 	int tool1_ = false;
 
-	cocos2d::Layer* enemys;
+	Sprite* st;
+	bool st_ = false;//Ò»´ÎÖ»ÄÜÍ¶Ò»¸öÊ¯Í·
 
-	//åŠ›åº¦æ¡
+	//Á¦¶ÈÌõ
 	ProgressTimer* timer;
 	Sprite* bar;
-	//è®¡æ—¶å™¨
+	//¼ÆÊ±Æ÷
 	float totalTime;
 	cocos2d::Label* time;
-	//çŸ³å¤´
+	//Ê¯Í·
 	Sprite* sp;
-	bool sp_ = false;//ä¸€æ¬¡åªèƒ½æŠ•ä¸€ä¸ªçŸ³å¤´
+	bool sp_ = false;//Ò»´ÎÖ»ÄÜÍ¶Ò»¸öÊ¯Í·
 	//player
 	Sprite* player1;
 	int health1;
 	int blackart1;
 	ProgressTimer * blood1;
 	ProgressTimer * magic1;
+
 	Sprite* player2;
 	int health2 = 100;
+	int blackart2;
 	ProgressTimer * blood2;
+	ProgressTimer * magic2;
 
-	int mouse_x, mouse_y;//å½“å‰é¼ æ ‡åæ ‡
+	int mouse_x, mouse_y;//µ±Ç°Êó±ê×ø±ê
 	
 	bool mousedown = false;
 	bool readyLaunch = false;
 	bool full = false;
-	//player å‡è¡€
-        void hurtPlayer(float p);
 };

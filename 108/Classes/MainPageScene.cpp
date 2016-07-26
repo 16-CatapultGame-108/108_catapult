@@ -43,7 +43,14 @@ bool MainPage::init()
 	background->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 	this->addChild(background, 0);
 
-	SimpleAudioEngine::getInstance()->preloadEffect("music/player_skill.mp3");
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("music/bgm.mp3");
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("music/bgm1.mp3");
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("music/bgm2.mp3");
+	SimpleAudioEngine::getInstance()->preloadEffect("music/shoot.wav");
+	SimpleAudioEngine::getInstance()->preloadEffect("music/skill.wav");
+	SimpleAudioEngine::getInstance()->preloadEffect("music/skill2.mp3");
+	SimpleAudioEngine::getInstance()->preloadEffect("music/skill3.wav");
+	SimpleAudioEngine::getInstance()->preloadEffect("music/run.wav");
 	SimpleAudioEngine::getInstance()->playBackgroundMusic("music/bgm.mp3",true);
 	
 	Sprite* title = Sprite::create("Mainpage/title.png");

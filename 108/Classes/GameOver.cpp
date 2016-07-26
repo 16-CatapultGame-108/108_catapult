@@ -1,7 +1,9 @@
 #include "GameOver.h"
 #include "MainPageScene.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
 
 Scene* GameOver::createScene(RenderTexture* sqr, bool wol) {
 	auto scene = Scene::create();
@@ -19,16 +21,24 @@ Scene* GameOver::createScene(RenderTexture* sqr, bool wol) {
 	scene->addChild(background, -1);
 
 	if (wol) {
-		auto label = Label::createWithTTF("You win!", "fonts/DFYuanW7-GB2312.ttf", 80);
-		label->setColor(Color3B::GREEN);
-		label->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height * .8));
-		scene->addChild(label, 1);
+		if (SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()) {
+			float tem = SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume();
+			SimpleAudioEngine::getInstance()->playBackgroundMusic("music/win.mp3", true);
+			SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(tem);
+		}
+		auto s1 = Sprite::create("gameover/endwin.png");
+		s1->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height * .7));
+		scene->addChild(s1);
 	}
 	else {
-		auto label = Label::createWithTTF("You lose!", "fonts/DFYuanW7-GB2312.ttf", 80);
-		label->setColor(Color3B::GREEN);
-		label->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height * .8));
-		scene->addChild(label, 1);
+		if (SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()) {
+			float tem = SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume();
+			SimpleAudioEngine::getInstance()->playBackgroundMusic("music/lose.mp3", true);
+			SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(tem);
+		}
+		auto s2 = Sprite::create("gameover/endlose.png");
+		s2->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height * .7));
+		scene->addChild(s2);
 	}
 	// return the scene
 	return scene;
@@ -54,9 +64,19 @@ void GameOver::return2home(Ref *ref) {
 	Director::getInstance()->popScene();
 	Director::getInstance()->popScene();
 	Director::getInstance()->popScene();
+	if (SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()) {
+		float tem = SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume();
+		SimpleAudioEngine::getInstance()->playBackgroundMusic("music/bgm.mp3", true);
+		SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(tem);
+	}
 }
 
 void GameOver::replay(Ref *ref) {
 	Director::getInstance()->popScene();
 	Director::getInstance()->popScene();
+	if (SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()) {
+		float tem = SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume();
+		SimpleAudioEngine::getInstance()->playBackgroundMusic("music/bgm.mp3", true);
+		SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(tem);
+	}
 }

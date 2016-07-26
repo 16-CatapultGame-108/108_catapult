@@ -1,7 +1,9 @@
 #include "pause.h"
 #include "MainPageScene.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
 
 Scene* pause::createScene(RenderTexture* sqr) {
 	auto scene = Scene::create();
@@ -42,11 +44,21 @@ void pause::return2home(Ref *ref) {
 	Director::getInstance()->popScene();
 	Director::getInstance()->popScene();
 	Director::getInstance()->popScene();
+	if (SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()) {
+		float tem = SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume();
+		SimpleAudioEngine::getInstance()->playBackgroundMusic("music/bgm.mp3", true);
+		SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(tem);
+	}
 }
 
 void pause::replay(Ref *ref) {
 	Director::getInstance()->popScene();
 	Director::getInstance()->popScene();
+	if (SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying()) {
+		float tem = SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume();
+		SimpleAudioEngine::getInstance()->playBackgroundMusic("music/bgm.mp3", true);
+		SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(tem);
+	}
 }
 
 void pause::resume(Ref *ref) {
