@@ -24,6 +24,12 @@ public:
 	bool onContactBegan(cocos2d::PhysicsContact& contact);
 
 	void simpleAI();
+	void simpleAI2();
+	void FireSchedule1(float dt);
+	void FireSchedule2(float dt);
+	void FireSchedule3(float dt);
+	void AILaunch(int shell_x, int shell_y, int offset_x, int offset_y, int tag);
+	void CanAct(float dt);
 
 	//随机出现的道具
 	void tools();
@@ -60,4 +66,7 @@ public:
 	bool mousedown = false;
 	bool readyLaunch = false;
 	bool full = false;
+
+	bool on_free;
+	int shoot_time = 0;
 };
